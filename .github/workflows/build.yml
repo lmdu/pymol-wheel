@@ -17,7 +17,7 @@ jobs:
 
       - name: Install pymol
         env:
-          CPPFLAGS: "-I/usr/local/opt/freetype2/include"
+          CPPFLAGS: "-I/usr/local/opt/freetype2/include/freetype2"
         run: |
           pip install Pmw==2.0.1
           brew install catch2 freeglut freetype glew glm libpng libxml2
