@@ -17,12 +17,14 @@ jobs:
 
       - name: Install pymol
         env:
-          CPPFLAGS: "-I/usr/local/opt/include/freetype2"
+          CPPFLAGS: "-I/usr/local/opt/freetype2/include"
         run: |
           pip install Pmw==2.0.1
           brew install catch2 freeglut freetype glew glm libpng libxml2
           brew install msgpack msgpack-cxx netcdf sip
           git clone https://github.com/schrodinger/pymol-open-source.git
+          git clone https://github.com/rcsb/mmtf-cpp.git
+          mv mmtf-cpp/include/mmtf* pymol-open-source/include/
           cd pymol-open-source
           python setup.py build install --glut --use-msgpackc c++11
           cd ..
