@@ -1,0 +1,26 @@
+name: build
+
+on: [push, pull_request]
+
+jobs:
+  build_mac:
+    name: Build on Mac
+    runs-on: macos-10.15
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+      - name: Install pymol
+        run: |
+          pip install Pmw==2.0.1
+          brew install catch2 freeglut freetype glew glm libpng libxml2
+          brew install msgpack msgpack-cxx netcdf sip
+          git clone https://github.com/schrodinger/pymol-open-source.git
+          cd pymol-open-source
+          python setup.py build install --glut --use-msgpackc c++11
+          cd ..
