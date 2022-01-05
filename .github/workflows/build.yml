@@ -3,28 +3,37 @@ name: build
 on: [push, pull_request]
 
 jobs:
-  build_mac:
-    name: Build on Mac
-    runs-on: macos-10.15
+  build_wheels:
+    name: Build on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-20.04, macos-10.15]
 
     steps:
-      - uses: actions/checkout@v2
-
-      - name: Install Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.8
-
-      - name: Install pymol
-        env:
-          CPPFLAGS: "-I/usr/local/opt/freetype2/include/freetype2"
+      - name: Clone pymol
         run: |
-          pip install Pmw==2.0.1
-          brew install catch2 freeglut freetype glew glm libpng libxml2
-          brew install msgpack msgpack-cxx netcdf sip
           git clone https://github.com/schrodinger/pymol-open-source.git
           git clone https://github.com/rcsb/mmtf-cpp.git
           mv mmtf-cpp/include/mmtf* pymol-open-source/include/
-          cd pymol-open-source
-          python setup.py build install --glut --use-msgpackc c++11
-          cd ..
+          rm -rf mmtf-cpp
+          mv pymol-open-source/* .
+          rm -rf pymol-open-source
+
+      - uses: actions/setup-python@v2
+
+      - name: Build Wheels
+        uses: pypa/cibuildwheel@v2.3.1
+        env:
+          CIBW_ARCHS: native
+          CIBW_SKIP: pp*
+          CIBW_BUILD_VERBOSITY: 0
+          CIBW_BEFORE_BUILD_MACOS: brew install catch2 freeglut freetype glew glm libpng libxml2 msgpack msgpack-cxx netcdf sip
+          CIBW_BEFORE_BUILD_LINUX: sudo apt install build-essential libgl1-mesa-dev libglew-dev libpng-dev libfreetype6-dev libmsgpack-dev libxml2-dev libglm-dev libnetcdf-dev
+          CIBW_ENVIRONMENT_MACOS: CPPFLAGS="-I/usr/local/opt/freetype2/include/freetype2"
+
+      - run: ls -l wheelhouse
+
+      - uses: actions/upload-artifact@v2
+        with:
+          path: ./wheelhouse/*.whl
