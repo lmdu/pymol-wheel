@@ -35,10 +35,7 @@ jobs:
           CIBW_BEFORE_BUILD_LINUX: yum install -y gcc gcc-c++ kernel-devel freeglut-devel glew-devel libpng-devel freetype-devel msgpack-devel libxml2-devel glm-devel netcdf-devel
           CIBW_ENVIRONMENT_MACOS: CPPFLAGS="-I/usr/local/opt/freetype2/include/freetype2"
 
-      - name: List wheels
-        run: |
-          mv pymol-2.6.0a0-cp38-cp38-win_amd64.whl wheelhouse
-          ls -l wheelhouse
+      - run: ls -l wheelhouse
 
       - uses: actions/upload-artifact@v2
         with:
