@@ -31,7 +31,7 @@ jobs:
           CIBW_BUILD: cp38-*
           CIBW_BUILD_VERBOSITY: 0
           CIBW_BEFORE_BUILD_MACOS: brew install catch2 freeglut freetype glew glm libpng libxml2 msgpack msgpack-cxx netcdf sip
-          CIBW_BEFORE_BUILD_LINUX: yum install -y gcc gcc-c++ kernel-devel freeglut-devel glew-devel libpng-devel freetype-devel msgpack-devel libxml2-devel glm-devel netcdf-devel
+          CIBW_BEFORE_BUILD_LINUX: yum install -y kernel-devel freeglut-devel glew-devel libpng-devel freetype-devel msgpack-devel libxml2-devel glm-devel netcdf-devel
           CIBW_ENVIRONMENT_MACOS: CPPFLAGS="-I/usr/local/opt/freetype2/include/freetype2"
 
       - run: ls -l wheelhouse
