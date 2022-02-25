@@ -21,6 +21,8 @@ jobs:
           rm -rf mmtf-cpp
           mv pymol-open-source/* .
           rm -rf pymol-open-source
+          sed -i s'/"pymol",/"pymol-wheel",/' setup.py
+          sed -i s'/get_pymol_version(),/"2.6.0.post1",/' setup.py
 
       - uses: actions/setup-python@v2
         with:
