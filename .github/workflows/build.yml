@@ -22,17 +22,17 @@ jobs:
           mv pymol-open-source/* .
           rm -rf pymol-open-source
 
-      - name: Change name and version on linux
-        if: matrix.os == 'ubuntu-20.04'
-        run: |
-          sed -i s'/"pymol",/"pymol-wheel",/' setup.py
-          sed -i s'/get_pymol_version(),/"2.6.0.post1",/' setup.py
+      #- name: Change name and version on linux
+      #  if: matrix.os == 'ubuntu-20.04'
+      #  run: |
+      #    sed -i s'/"pymol",/"pymol-wheel",/' setup.py
+      #    sed -i s'/get_pymol_version(),/"2.6.0.post1",/' setup.py
 
-      - name: Change name and version on macos
-        if: matrix.os == 'macos-10.15'
-        run: |
-          sed -i "" s'/"pymol",/"pymol-wheel",/' setup.py
-          sed -i "" s'/get_pymol_version(),/"2.6.0.post1",/' setup.py
+      #- name: Change name and version on macos
+      #  if: matrix.os == 'macos-10.15'
+      #  run: |
+      #    sed -i "" s'/"pymol",/"pymol-wheel",/' setup.py
+      #    sed -i "" s'/get_pymol_version(),/"2.6.0.post1",/' setup.py
 
       - uses: actions/setup-python@v2
         with:
