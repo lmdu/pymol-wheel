@@ -8,10 +8,10 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-20.04, macos-10.15]
+        os: [ubuntu-20.04, macos-11]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Clone pymol
         run: |
@@ -34,12 +34,12 @@ jobs:
       #    sed -i "" s'/"pymol",/"pymol-wheel",/' setup.py
       #    sed -i "" s'/get_pymol_version(),/"2.6.0.post1",/' setup.py
 
-      - uses: actions/setup-python@v2
+      - uses: actions/setup-python@v4
         with:
           python-version: 3.8
 
       - name: Build Wheels
-        uses: pypa/cibuildwheel@v2.3.1
+        uses: pypa/cibuildwheel@v2.11.1
         env:
           CIBW_SKIP: pp* *musllinux*
           #CIBW_BUILD: cp38-*
@@ -51,7 +51,7 @@ jobs:
 
       - run: ls -l wheelhouse
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           path: ./wheelhouse/*.whl
 
