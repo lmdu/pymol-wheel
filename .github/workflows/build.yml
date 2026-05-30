@@ -40,6 +40,7 @@ jobs:
             CFLAGS="-I/opt/homebrew/include -I/usr/local/include"
             CXXFLAGS="-I/opt/homebrew/include -I/usr/local/include"
             LDFLAGS="-L/opt/homebrew/lib -L/usr/local/lib"
+            CPPFLAGS="-I/usr/local/opt/freetype2/include/freetype2"
 
       - run: ls -l wheelhouse
 
