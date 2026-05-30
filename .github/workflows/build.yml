@@ -8,7 +8,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-22.04, macos-15, macos-15-intel]
+        os: [macos-15, macos-15-intel]
 
     steps:
       - uses: actions/checkout@v6
@@ -34,7 +34,9 @@ jobs:
           CIBW_ARCHS: auto64
           #CIBW_ARCHS_MACOS: x86_64 arm64
           #CIBW_MANYLINUX_X86_64_IMAGE: manylinux_2_28
-          CIBW_BEFORE_BUILD_MACOS: brew install catch2 freeglut freetype glew glm libpng libxml2 msgpack msgpack-cxx netcdf sip
+          CIBW_BEFORE_BUILD_MACOS: >
+            brew install catch2 freeglut freetype glew glm libpng libxml2 msgpack msgpack-cxx netcdf sip
+            pip install numpy
           CIBW_BEFORE_BUILD_LINUX: dnf install -y epel-release && dnf install -y gcc gcc-c++ kernel-devel freeglut-devel glew-devel libpng-devel freetype-devel msgpack-devel libxml2-devel glm-devel netcdf-devel
           CIBW_ENVIRONMENT_MACOS: >
             CFLAGS="-I/opt/homebrew/include -I/usr/local/include"
